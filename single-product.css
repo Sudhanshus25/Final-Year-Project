@@ -1,0 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+}
+
+header.admin-header {
+    background: #222;
+    color: #fff;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header.admin-header nav a {
+    color: #fff;
+    margin-left: 1em;
+    text-decoration: none;
+}
+
+main {
+    padding: 2em;
+    display: flex;
+    gap: 2em;
+}
+
+.product-image img {
+    max-width: 300px;
+    border: 1px solid #ccc;
+}
+
+.product-info {
+    max-width: 600px;
+}
+
+.product-info h2 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.product-info .price {
+    color: green;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+
+.product-info .original {
+    text-decoration: line-through;
+    color: #999;
+    margin-left: 0.5em;
+}
+
+.product-info .offer {
+    color: orange;
+    font-weight: bold;
+    margin-left: 0.5em;
+}
+
+.product-info label {
+    display: block;
+    margin-top: 1em;
+}
+
+.product-info input,
+.product-info select,
+.product-info textarea {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+}
+
+.product-info button {
+    margin-top: 1.5em;
+    padding: 0.7em 1.2em;
+    background: #ffdd00;
+    border: none;
+    cursor: pointer;
+}
+
+footer {
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+    margin-top: 2em;
+}

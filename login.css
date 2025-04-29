@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fdf6f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.login-container {
+    display: flex;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 900px;
+    max-width: 90%;
+}
+.login-box {
+    padding: 40px 60px;
+    width: 45%;
+}
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.input-group {
+    margin-bottom: 15px;
+}
+.input-group label {
+    display: block;
+    /* font-weight: bold; */
+    margin-bottom: 5px;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+}
+.forgot-password {
+    display: block;
+    text-align: right;
+    margin-bottom: 15px;
+    color: #666;
+    text-decoration: none;
+}
+.login-btn {
+    width: 100%;
+    background-color: #ffc59f;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+}
+.or {
+    text-align: center;
+    margin: 15px 0;
+    color: #888;
+}
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.social-login img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.signup-text {
+    text-align: center;
+    margin-top: 15px;
+}
+.signup-text a {
+    color: #d77a61;
+    font-weight: bold;
+    text-decoration: none;
+}
+.login-image {
+    width: 50%;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fde3d9;
+    margin: 90px 50px 0px 50px;
+    border-radius: 50% 50% 0% 0%;
+}
+.login-image img {
+    width: 300px;
+    height: auto;
+    position: relative;
+    top: 0;
+    right: 90px;
+}
+
+
+label{
+    position: relative;
+    top: 12px;
+    left: 25px;
+    font-weight: bold;
+    height: 10px;
+    width: fit-content;
+    padding: 3px;
+    background-color: #fff;
+    font-size: 11px;
+    color: #666;
+}
+
