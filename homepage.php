@@ -193,11 +193,11 @@
                     <div class="category-menu">
                         <h2>Shop by category - Men</h2>
                         <div class="category-container">
-                            <img src="https://images.bewakoof.com/uploads/grid/app/444x666-Trending-Category-Icon-OS-T-Shirts-1735907878.jpg"
+                            <img src="assets/img/444x666-Desktop-Shorts-Trending-Category-Icon-1741345298.webp"
                                 alt="">
-                            <img src="https://images.bewakoof.com/uploads/grid/app/444x666-Trending-Category-Icon-OS-T-Shirts-1735907878.jpg"
+                            <img src="assets/img/444x666-Joggers-Men-Desktop-Trending-Category-Icon-1742210212.webp"
                                 alt="">
-                            <img src="https://images.bewakoof.com/uploads/grid/app/444x666-Trending-Category-Icon-OS-T-Shirts-1735907878.jpg"
+                            <img src="assets/img/444x666-Shirts-Men-Desktop-Trending-Category-Icon-1742210198.webp"
                                 alt="">
                             <img src="https://images.bewakoof.com/uploads/grid/app/444x666-Trending-Category-Icon-OS-T-Shirts-1735907878.jpg"
                                 alt="">

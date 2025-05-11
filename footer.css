@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    color: #fff;
+  }
+  
+  .footer {
+    background-color: #1c1c1c;
+    padding: 40px 20px;
+  }
+  
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .footer-section {
+    flex: 1 1 220px;
+    margin: 20px;
+  }
+  
+  .footer-section h3 {
+    color: #ffc107;
+    margin-bottom: 10px;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li {
+    margin: 6px 0;
+  }
+  
+  .footer-section ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .footer-section p {
+    font-size: 14px;
+    margin: 6px 0;
+  }
+  
+  .logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  .app-links img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .social-links .icons span {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  .payment-methods img {
+    height: 30px;
+    margin: 5px;
+  }
+  
+  .subscribe-form input {
+    padding: 8px;
+    width: 65%;
+    border: none;
+    background: #000;
+    color: white;
+  }
+  
+  .subscribe-form button {
+    padding: 8px 16px;
+    background: #ffc107;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  hr {
+    margin: 40px 0;
+    border: 0.5px solid #333;
+  }
+  
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .footer-links, .quick-links {
+    flex: 1 1 200px;
+    margin: 20px;
+  }
+  
+  .footer-links h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .footer-links ul, .quick-links ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links ul li, .quick-links ul li {
+    margin: 6px 0;
+  }
+  
+  .footer-links ul li a, .quick-links ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .quick-links ul li a {
+    color: #00ffff; /* Aqua blue color for FANBOOK, OFFERS, SITEMAP */
+  }
+  
