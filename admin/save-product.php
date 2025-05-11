@@ -1,7 +1,18 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// echo "<h2>Debugging Product Submission</h2>";
+
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // echo "<h3>POST Data Received:</h3>";
+    // echo "<pre>"; print_r($_POST); echo "</pre>";
+    // echo "<h3>FILES Data:</h3>";
+    // echo "<pre>"; print_r($_FILES); echo "</pre>";
+
     // Sanitize input
     $title = sanitizeInput($_POST['title'], $conn);
     $description = sanitizeInput($_POST['description'], $conn);
@@ -11,107 +22,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sale_price = isset($_POST['sale_price']) ? (float)$_POST['sale_price'] : null;
     $sizes = isset($_POST['size']) ? sanitizeInput($_POST['size'], $conn) : '';
     $colors = isset($_POST['color']) ? sanitizeInput($_POST['color'], $conn) : '';
-    $collections = isset($_POST['collections']) ? $_POST['collections'] : [];
+
+    // echo "<h3>Sanitized Values:</h3>";
+    // echo "Title: $title<br>";
+    // echo "Description: $description<br>";
+    // echo "Category ID: $category_id<br>";
+    // echo "Subcategory ID: $subcategory_id<br>";
+    // echo "MRP: $mrp<br>";
+    // echo "Sale Price: " . ($sale_price ?? 'NULL') . "<br>";
+    // echo "Sizes: $sizes<br>";
+    // echo "Colors: $colors<br>";
 
     // Create uploads directory if it doesn't exist
     if (!is_dir('uploads')) {
+        // echo "Creating uploads directory...<br>";
         mkdir('uploads', 0755, true);
     }
 
-    // Start transaction
-    $conn->begin_transaction();
+    // Check directory permissions
+    // echo "Uploads directory exists: " . (is_dir('uploads') ? 'Yes' : 'No') . "<br>";
+    // echo "Uploads directory writable: " . (is_writable('uploads') ? 'Yes' : 'No') . "<br>";
 
-    try {
-        // Insert product into database
-        $stmt = $conn->prepare("INSERT INTO products (title, description, category_id, subcategory_id, mrp, sale_price, sizes, colors) 
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssiiddss", $title, $description, $category_id, $subcategory_id, $mrp, $sale_price, $sizes, $colors);
-        $stmt->execute();
-        $product_id = $conn->insert_id;
-        $stmt->close();
+    // Handle main image upload
+    if (isset($_FILES['main_image'])) {
+        // echo "<h3>Processing Main Image</h3>";
+        // echo "File name: " . $_FILES['main_image']['name'] . "<br>";
+        // echo "File size: " . $_FILES['main_image']['size'] . "<br>";
+        // echo "File type: " . $_FILES['main_image']['type'] . "<br>";
+        // echo "Temp path: " . $_FILES['main_image']['tmp_name'] . "<br>";
+        // echo "Error code: " . $_FILES['main_image']['error'] . "<br>";
 
-        // Handle main image upload
-        if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
-            $main_image_name = uploadImage($_FILES['main_image'], $product_id, true);
-            if (!$main_image_name) {
-                throw new Exception("Main image upload failed");
-            }
-        }
+        $imageName = time() . '-' . basename($_FILES['main_image']['name']);
+        $imagePath = 'uploads/' . $imageName;
 
-        // Handle additional images
-        if (!empty($_FILES['additional_images']['name'][0])) {
-            foreach ($_FILES['additional_images']['tmp_name'] as $key => $tmp_name) {
-                if ($_FILES['additional_images']['error'][$key] === UPLOAD_ERR_OK) {
-                    $file = [
-                        'name' => $_FILES['additional_images']['name'][$key],
-                        'tmp_name' => $tmp_name,
-                        'error' => $_FILES['additional_images']['error'][$key]
-                    ];
-                    uploadImage($file, $product_id, false);
+        if (move_uploaded_file($_FILES['main_image']['tmp_name'], $imagePath)) {
+            // echo "Image uploaded successfully to: $imagePath<br>";
+
+            // Insert into database
+            $sql = "INSERT INTO products (title, description, category_id, subcategory_id, mrp, sale_price, sizes, colors, image) 
+                    VALUES ('$title', '$description', '$category_id', '$subcategory_id', '$mrp', '$sale_price', '$sizes', '$colors', '$imageName')";
+
+            // echo "<h3>SQL Query:</h3>";
+            // echo $sql . "<br>";
+
+            if ($conn->query($sql)) {
+                // echo "<h3 style='color:green;'>Product added successfully!</h3>";
+                // echo "Insert ID: " . $conn->insert_id . "<br>";
+                
+                // Verify the record exists
+                $last_id = $conn->insert_id;
+                $check = $conn->query("SELECT * FROM products WHERE id = $last_id");
+                echo "Records found: " . $check->num_rows . "<br>";
+                
+                if ($check->num_rows > 0) {
+                    // echo "<pre>"; print_r($check->fetch_assoc()); echo "</pre>";
                 }
+                
+                // header("Location: manage-products.php?success=Product added successfully");
+            } else {
+                // echo "<h3 style='color:red;'>Database error: " . $conn->error . "</h3>";
             }
+        } else {
+            // echo "<h3 style='color:red;'>Image upload failed!</h3>";
+            // echo "Possible reasons:<br>";
+            // echo "- Invalid file<br>";
+            // echo "- Permission issues<br>";
+            // echo "- File size too large<br>";
         }
-
-        // Handle color-specific images
-        $color_array = !empty($colors) ? explode(',', $colors) : [];
-        foreach ($color_array as $color) {
-            $color = trim($color);
-            if (isset($_FILES['color_image_'.$color]) && $_FILES['color_image_'.$color]['error'] === UPLOAD_ERR_OK) {
-                $color_image_name = uploadImage($_FILES['color_image_'.$color], $product_id, false, $color);
-                if (!$color_image_name) {
-                    throw new Exception("Color image upload failed for $color");
-                }
-            }
-        }
-
-        // Add to collections
-        if (!empty($collections)) {
-            foreach ($collections as $collection_id) {
-                $collection_id = (int)$collection_id;
-                $conn->query("INSERT INTO collection_products (collection_id, product_id) VALUES ($collection_id, $product_id)");
-            }
-        }
-
-        // Commit transaction
-        $conn->commit();
-        
-        header("Location: manage-products.php?success=Product added successfully");
-        exit();
-    } catch (Exception $e) {
-        // Rollback transaction on error
-        $conn->rollback();
-        header("Location: add-product.php?error=" . urlencode($e->getMessage()));
-        exit();
+    } else {
+        // echo "<h3 style='color:red;'>No main image uploaded!</h3>";
     }
 } else {
-    header("Location: add-product.php?error=Invalid request");
-    exit();
+    // echo "<h3 style='color:red;'>Invalid request method!</h3>";
 }
 
-function uploadImage($file, $product_id, $is_primary = false, $color = null) {
-    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
-    $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    
-    if (!in_array($file_extension, $allowed_extensions)) {
-        return false;
-    }
-    
-    $image_name = 'product_' . $product_id . '_' . time() . '_' . uniqid() . '.' . $file_extension;
-    $image_path = 'uploads/' . $image_name;
-    
-    if (move_uploaded_file($file['tmp_name'], $image_path)) {
-        global $conn;
-        $color = $color ? sanitizeInput($color, $conn) : null;
-        $is_primary = $is_primary ? 1 : 0;
-        
-        $stmt = $conn->prepare("INSERT INTO product_images (product_id, image_path, color, is_primary) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("issi", $product_id, $image_name, $color, $is_primary);
-        $stmt->execute();
-        $stmt->close();
-        
-        return $image_name;
-    }
-    
-    return false;
-}
+// echo "<h3>Debugging Complete</h3>";
 ?>

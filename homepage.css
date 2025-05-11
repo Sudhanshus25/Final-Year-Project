@@ -27,6 +27,12 @@ header{
     position: sticky;
 }
 
+header a, i, span{
+    text-decoration: none;
+    color: #000;
+    font-size: larger;
+}
+
 .top-header{
     background: rgb(237, 237, 237);
     display: inline-block;
@@ -364,4 +370,6 @@ header{
     color: green;
     font-weight: bold;
   }
+  
+
   

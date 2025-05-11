@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
+     
 
     <script src="script.js"></script>
     <title>Sudhanshu</title>
@@ -14,60 +15,7 @@
 
 <body>
     <main class="header_container">
-        <header>
-            <section class="top-header">
-                <div class="top-header-sub">
-                    <div class="top-bar-left">
-                        <span>Offers</span>
-                        <span>Fanbook</span>
-                        <span>Download App</span>
-                        <span>Find a store near me</span>
-                    </div>
-                    <div class="top-bar-right">
-                        <span>Contact Us</span>
-                        <span>Track Order</span>
-                    </div>
-                </div>
-            </section>
-            <div class="header-menu">
-                <div class="menu-container">
-                    <div class="left-container">
-                        <a href="/">
-                            <!-- <img title="logo" src="https://images.bewakoof.com/web/ic-desktop-bwkf-trademark-logo.svg" alt="logo"> -->
-                            SUDHANSHU
-                        </a>
-                        <nav class="header-left-menu">
-                            <ul class="header-left-menu-list">
-                                <li>MEN</li>
-                                <li>WOMEN</li>
-                                <li>MOBILE COVERS</li>
-                            </ul>
-                        </nav>
-                    </div>
-
-                    <div class="right-container">
-                        <ul class="header-right-item">
-                            <li>
-                                <div class="header-search-container">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                    <input class="search_field" type="search" placeholder="Search by products">
-                                </div>
-                            </li>
-                            <span>|</span>
-                            <a href="login.html">
-                                <span>LOGIN</span>
-                            </a>
-                            <a href="/wishlist">
-                                <span>W</span>
-                            </a>
-                            <a href="/cart">
-                                <span>C</span>
-                            </a>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </header>
+       <?php include 'header.php'; ?>
 
         <div class="homepage_container">
             <div class="homepage_main">
